@@ -1,0 +1,18 @@
+class Solution
+{
+    public int firstElementKTime(int n, int k, int[] a) { 
+        HashMap<Integer,Integer> mp = new HashMap<>();
+        int l = Integer.MIN_VALUE;
+        int f = 0;
+        int p = a.length;
+        for(int i=0;i<p;i++){
+            mp.put(a[i],mp.getOrDefault(a[i],0)+1);
+            if(l<mp.get(a[i])){
+                l = mp.get(a[i]);
+                f = a[i];
+            }
+            if(l==k)return f;
+        }
+        return -1;
+    } 
+}
