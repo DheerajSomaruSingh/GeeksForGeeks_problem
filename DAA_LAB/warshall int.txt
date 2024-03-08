@@ -1,0 +1,71 @@
+import java.util.Scanner;
+
+class Solution {
+    public void shortest_distance(int[][] matrix) {
+        // Code here
+        int n = matrix.length;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == -1) {
+                    matrix[i][j] = (int) (1e9);
+                }
+                if (i == j) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        // dp every instance for via
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    matrix[i][j] = Math.min(matrix[i][j], matrix[i][k] + matrix[k][j]);
+                }
+            }
+        }
+
+        // if there is negative in matrix then print there no shortest path.
+        for (int i = 0; i < n; i++) {
+            if (matrix[i][i] < 0) {
+                System.out.println("No shortest Path");
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == (int) (1e9)) {
+                    matrix[i][j] = -1;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the size of the matrix: ");
+        int n = scanner.nextInt();
+
+        int[][] matrix = new int[n][n];
+        System.out.println("Enter the matrix elements:");
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        Solution solution = new Solution();
+        solution.shortest_distance(matrix);
+
+        System.out.println("Shortest distance matrix:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}

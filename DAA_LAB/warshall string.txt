@@ -1,0 +1,81 @@
+import java.util.Scanner;
+
+class Solution {
+    public void shortest_distance(int[][] matrix) {
+        // Code here
+        int n = matrix.length;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == -1) {
+                    matrix[i][j] = (int) (1e9);
+                }
+                if (i == j) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        // dp every instance for via
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    matrix[i][j] = Math.min(matrix[i][j], matrix[i][k] + matrix[k][j]);
+                }
+            }
+        }
+
+        // if there is negative in matrix then print there no shortest path.
+        for (int i = 0; i < n; i++) {
+            if (matrix[i][i] < 0) {
+                System.out.println("No shortest Path");
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == (int) (1e9)) {
+                    matrix[i][j] = -1;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
+
+        int n = input.length();
+        int[][] matrix = new int[n][n];
+
+        // Initialize the matrix with -1 (no edge)
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = -1;
+            }
+        }
+
+        // Set the weight of the edges based on the absolute difference of ASCII values
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int weight = Math.abs(input.charAt(i) - input.charAt(j));
+                matrix[i][j] = weight;
+                matrix[j][i] = weight;
+            }
+        }
+
+        Solution solution = new Solution();
+        solution.shortest_distance(matrix);
+
+        System.out.println("Shortest distance matrix:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}
