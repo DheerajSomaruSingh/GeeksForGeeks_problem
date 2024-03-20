@@ -1,0 +1,28 @@
+class Solution{
+    int maxsum = Integer.MIN_VALUE;
+    int maxlength = 0;
+    
+    void fun(Node node,int pathlength,int pathsum){
+        if(node==null){
+            return;
+        }
+        pathlength++;
+        pathsum+=node.data;
+        
+        if(node.left==null && node.right==null){
+            if(pathlength>maxlength || (pathlength==maxlength && pathsum>maxsum)){
+                maxlength = pathlength;
+                maxsum = pathsum;
+            }
+        }
+        fun(node.left,pathlength,pathsum);
+        fun(node.right,pathlength,pathsum);
+    }
+    
+    public int sumOfLongRootToLeafPath(Node root)
+    {
+        //code here
+        fun(root,0,0);
+        return maxsum;
+    }
+}
