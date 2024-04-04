@@ -1,0 +1,52 @@
+import java.util.*;
+
+class Main {
+  public static void main(String args[]) {
+    // Try out your code here
+    Scanner sc = new Scanner(System.in);
+    Stack<Integer> s = new Stack<>();
+    String l = sc.nextLine();
+    /*
+    int n = l.length();
+    int maxcnt = 0;
+    int cnt = 0;
+    int m = 0;
+    for (int i = 0; i < n; i++) {
+      if (s.isEmpty()) {
+        s.push(l.charAt(i));
+        m++;
+      } else if (m>1) {
+        cnt = 0;
+        m=0;
+      } else if (s.peek() == '(' && l.charAt(i) == ')') {
+        cnt += 2;
+        s.pop();
+        m = 0;
+        maxcnt = Math.max(maxcnt, cnt);
+      } else {
+        s.push(l.charAt(i));
+        m++;
+      }
+    }
+    System.out.print(maxcnt);
+    */
+    s.push(-1);
+    int result = 0;
+    for(int i=0;i<l.length();i++){
+      char c = l.charAt(i);
+      if(c=='(')s.push(i);
+      else{
+        if(!s.isEmpty()){
+          s.pop();
+          if(!s.isEmpty()){
+            result = Math.max(result,i-s.peek());
+          }
+          else{
+            s.push(i);
+          }
+        }
+      }
+    }
+    System.out.print(result);    
+  }
+}
